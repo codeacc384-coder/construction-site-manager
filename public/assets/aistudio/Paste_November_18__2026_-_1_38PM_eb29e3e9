@@ -1,0 +1,1781 @@
+# BUILDFlow — SITE MANAGER DASHBOARD
+## Complete UI/UX and Functional Development Master Prompt
+
+Build a complete, premium, production-quality **Site Manager Dashboard** for BuildFlow, a multi-tenant construction workforce management and site operations SaaS platform.
+
+I want you to build this dashboard from scratch. Do not reuse the existing Company Admin dashboard design or its layouts. Create a dedicated Site Manager experience with its own navigation, dashboard widgets, operational workflows, responsive layouts and role-based access.
+
+This is not a generic admin dashboard. It must look and behave like a modern construction site management application used by real construction companies in India.
+
+---
+
+# 1. PRODUCT OBJECTIVE
+
+The Site Manager is responsible for managing the day-to-day activities of one or more assigned construction sites.
+
+The dashboard must help the Site Manager:
+
+- Monitor daily site operations.
+- Track employees, labourers and contractors.
+- Monitor attendance and late arrivals.
+- View workforce check-in and check-out status.
+- Monitor active employee GPS tracking.
+- Manage supervisors and site engineers.
+- Monitor daily construction progress.
+- Review material purchases and delivery records.
+- Manage site inventory and material consumption.
+- Monitor machinery and equipment.
+- Review site expenses.
+- Manage safety incidents and inspections.
+- Approve or reject assigned operational requests.
+- Submit reports to Company Admin.
+- Identify operational problems before they become serious.
+
+The dashboard must prioritize operational actions over complicated analytics.
+
+**Important:** A Site Manager must only see sites and records that they are authorized to access. Do not provide unrestricted access to the entire company's workforce, payroll, finance or confidential HR information.
+
+---
+
+# 2. TECHNOLOGY AND DEVELOPMENT REQUIREMENTS
+
+Use the following technology stack:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- Lucide React icons
+- Recharts for charts
+- Framer Motion for subtle animations
+- React Router for navigation
+- React Hook Form and Zod for forms and validation
+- TanStack Query for API data management
+- Zustand for shared application state
+
+Backend integration will be through Supabase:
+
+- Supabase Authentication
+- PostgreSQL database
+- Row Level Security
+- Supabase Realtime
+- Supabase Edge Functions
+- Cloudflare R2 for documents and images
+
+For the first implementation, use realistic mock data and modular service files. Keep the application ready for future Supabase integration.
+
+Do not put all the logic inside one component. Create reusable components, separate pages, hooks, services, types and utility files.
+
+---
+
+# 3. DESIGN DIRECTION
+
+Create a premium enterprise construction management interface.
+
+The visual style should be inspired by modern SaaS products such as Linear, Stripe and premium ERP platforms, while maintaining a distinct construction operations identity.
+
+### Color palette
+
+- Primary navy: #101F35
+- Primary blue: #2563EB
+- Light blue: #EFF6FF
+- Construction orange: #F59E0B
+- Background: #F5F7FA
+- Card background: #FFFFFF
+- Main text: #172B4D
+- Secondary text: #64748B
+- Success: #16A34A
+- Warning: #D97706
+- Danger: #DC2626
+- Borders: #E2E8F0
+
+### UI style
+
+- Clean, professional and spacious layout.
+- Modern typography using Inter.
+- Consistent rounded cards.
+- Subtle shadows and borders.
+- Professional data tables.
+- Clear status indicators.
+- High-quality charts.
+- Consistent iconography using Lucide.
+- Smooth hover states and transitions.
+- Avoid excessive gradients.
+- Avoid unnecessary decorative elements.
+- Do not make every section a separate oversized card.
+- Use realistic construction-related terminology and data.
+
+The interface must feel like software used by a professional construction company, not a student project.
+
+---
+
+# 4. RESPONSIVE APPLICATION SHELL
+
+Create a complete responsive application shell.
+
+### Desktop layout
+
+Left sidebar:
+- Fixed or collapsible navigation.
+- BuildFlow logo.
+- Site selector.
+- Navigation grouped by category.
+- User profile at the bottom.
+- Active navigation clearly highlighted.
+
+Top navigation:
+- Current site name.
+- Site location.
+- Current date.
+- Global search.
+- Notifications.
+- Help/support.
+- Site Manager profile dropdown.
+
+### Tablet layout
+
+- Collapsible sidebar.
+- Responsive content grid.
+- Tables should become horizontally scrollable or transform into compact cards.
+- Filters should remain accessible.
+
+### Mobile layout
+
+The mobile experience is extremely important.
+
+Support widths of 360px, 375px, 390px, 430px and larger.
+
+Create a mobile-first operational experience:
+
+- Compact top header.
+- Current site visible near the top.
+- Important daily statistics in horizontally scrollable or compact grids.
+- Bottom navigation for frequently used modules.
+- Additional navigation inside a drawer.
+- Large touch-friendly buttons.
+- Forms that work comfortably on mobile.
+- Tables converted into readable cards where appropriate.
+- No horizontal page overflow.
+- No overlapping text or buttons.
+- Charts must resize correctly.
+- Drawers and modals must fit smaller screens.
+
+Do not simply shrink the desktop dashboard. Redesign the mobile layout intelligently.
+
+---
+
+# 5. SITE MANAGER NAVIGATION
+
+Create the following sidebar structure.
+
+### SITE WORKSPACE
+1. Overview
+2. Daily Operations
+3. Site Progress
+4. Site Reports
+
+### WORKFORCE
+5. Workforce
+6. Attendance & Tracking
+7. Supervisors & Engineers
+8. Shift Management
+9. Leave & Overtime Requests
+
+### MATERIALS & ASSETS
+10. Procurement Requests
+11. Material Receipts
+12. Site Inventory
+13. Material Consumption
+14. Equipment & Machinery
+15. Contractors
+
+### SITE MANAGEMENT
+16. Site Expenses
+17. Safety & Incidents
+18. Documents
+19. Approvals
+20. Notifications
+
+### ACCOUNT
+21. Site Settings
+22. Help & Support
+23. My Profile
+
+Each navigation item must open a real page with relevant functionality.
+
+Use a consistent page header with:
+- Page title.
+- Short description.
+- Breadcrumbs where useful.
+- Primary action button.
+- Relevant filters.
+
+---
+
+# 6. SITE SELECTOR AND SITE CONTEXT
+
+A Site Manager may be assigned to multiple construction sites.
+
+Create a site selector at the top of the application.
+
+Example mock sites:
+
+- Green Valley Residential Towers — Hyderabad.
+- Metro Commercial Complex — Bengaluru.
+- Lakeview Infrastructure Project — Vijayawada.
+
+Each site must have its own:
+
+- Site ID.
+- Project name.
+- Location.
+- Site address.
+- Site Manager.
+- Assigned Site Engineers.
+- Supervisors.
+- Workforce.
+- Operating status.
+- Start date.
+- Expected completion date.
+- Site progress.
+- Geofence configuration.
+
+When the Site Manager switches sites, all relevant dashboard data must update.
+
+Do not mix workforce, attendance, materials, expenses or operational records from different sites.
+
+Provide an All Assigned Sites overview only when the Site Manager has permission to view multiple assigned sites.
+
+---
+
+# 7. SITE MANAGER OVERVIEW DASHBOARD
+
+This is the most important page.
+
+Create an attractive, information-rich overview that answers:
+
+**What is happening at my construction site today?**
+
+### A. Welcome section
+
+Display:
+
+"Good Morning, Site Manager"
+
+Show:
+- Current date.
+- Selected site.
+- Site location.
+- Site operational status.
+- Weather placeholder only if connected to a real weather service. Otherwise do not display fabricated live weather.
+
+Provide quick actions:
+- Add Daily Report.
+- Register Workforce.
+- Record Material Receipt.
+- Report Site Issue.
+- Create Purchase Request.
+
+### B. Key operational KPI cards
+
+Create the following KPI cards:
+
+1. Total Assigned Workforce.
+2. Present Today.
+3. Absent Today.
+4. Currently On Site.
+5. Active Tracking Sessions.
+6. Pending Approvals.
+7. Material Requests Pending.
+8. Safety Issues Open.
+
+Each KPI must show:
+- Main number.
+- Short descriptive label.
+- Relevant status indicator.
+- Optional comparison with yesterday.
+- Click action to open the corresponding module with filters applied.
+
+Use realistic mock data.
+
+Example:
+
+- Assigned Workforce: 186.
+- Present Today: 142.
+- Absent Today: 18.
+- On Leave: 8.
+- Attendance Not Submitted: 18.
+- Active Tracking: 126.
+- Pending Approvals: 12.
+- Open Safety Issues: 3.
+
+Ensure the figures are logically consistent. Do not count employees twice.
+
+### C. Workforce attendance summary
+
+Create a visually attractive attendance section.
+
+Show:
+- Present.
+- Absent.
+- Late.
+- On Leave.
+- Missing Check-out.
+- Pending Verification.
+
+Use a donut chart and compact status breakdown.
+
+Include:
+- View Attendance.
+- Download Attendance Report.
+
+### D. Live site workforce section
+
+Create a workforce activity panel.
+
+Display:
+
+| Employee | Role | Check-in | Status | Last Location Update |
+|---|---|---|---|---|
+| Ravi Kumar | Mason | 08:02 AM | On Site | 2 min ago |
+| Suresh | Electrician | 08:15 AM | On Site | 4 min ago |
+| Mahesh | Supervisor | 07:50 AM | On Site | 1 min ago |
+| Ramesh | Labour | 08:45 AM | Late | 3 min ago |
+
+Show:
+- Employee photo/avatar.
+- Employee name.
+- Designation.
+- Attendance status.
+- Last tracking update.
+- Location freshness.
+
+Use clear indicators:
+- Active.
+- Stale Location.
+- Checked Out.
+- Tracking Unavailable.
+
+Do not display fake real-time GPS positions as actual positions. Use clearly labelled simulated data until GPS integration is implemented.
+
+### E. Site progress overview
+
+Display:
+
+- Overall project progress.
+- Planned vs actual progress.
+- Completed milestones.
+- Pending milestones.
+- Delayed activities.
+
+Use a progress chart.
+
+Example construction activities:
+
+- Foundation: Completed.
+- Structural Work: 75%.
+- Masonry: 48%.
+- Electrical: 30%.
+- Plumbing: 25%.
+- Finishing: 10%.
+
+Provide a View Site Progress action.
+
+### F. Materials and inventory overview
+
+Show:
+
+- Total material categories.
+- Low-stock materials.
+- Pending material receipts.
+- Pending purchase requests.
+- Recent material consumption.
+
+Example:
+
+| Material | Available Quantity | Unit | Status |
+|---|---:|---|---|
+| Cement | 120 | Bags | Normal |
+| Steel | 2.5 | Tonnes | Low Stock |
+| Sand | 18 | Tonnes | Normal |
+| Bricks | 1,500 | Pieces | Low Stock |
+
+### G. Equipment and machinery overview
+
+Show:
+
+- Total equipment.
+- Available.
+- In Use.
+- Under Maintenance.
+- Out of Service.
+
+Example equipment:
+- Excavator.
+- Concrete Mixer.
+- Tower Crane.
+- Generator.
+- Tractor.
+- Water Tanker.
+
+### H. Pending action centre
+
+Create a highly visible section called "Needs Your Attention".
+
+Include:
+
+- Attendance corrections waiting for approval.
+- Leave requests.
+- Overtime requests.
+- Material receipt verification.
+- Purchase requests.
+- Site expense submissions.
+- Safety inspection issues.
+- Equipment maintenance requests.
+
+Every item must have:
+- Request type.
+- Requester.
+- Date.
+- Priority.
+- Current status.
+- Review button.
+
+### I. Recent site activity
+
+Create a chronological activity timeline.
+
+Examples:
+- 08:15 AM — Ravi Kumar checked in.
+- 08:30 AM — Cement delivery recorded.
+- 09:00 AM — Supervisor submitted daily report.
+- 09:30 AM — Material request submitted.
+- 10:15 AM — Equipment maintenance issue reported.
+
+Show activity type, person, time and relevant details.
+
+---
+
+# 8. DAILY OPERATIONS MODULE
+
+Create a dedicated daily operations page.
+
+This page should help the Site Manager manage the entire working day.
+
+### Daily operations sections
+
+- Today's workforce summary.
+- Today's assigned activities.
+- Site engineer updates.
+- Supervisor updates.
+- Work completed.
+- Work pending.
+- Material deliveries expected.
+- Equipment utilization.
+- Safety observations.
+- Site issues.
+
+### Daily task management
+
+Allow the Site Manager to:
+
+- Create site tasks.
+- Assign tasks to a supervisor or engineer.
+- Select a work area.
+- Set priority.
+- Set start and due dates.
+- Add descriptions.
+- Upload reference images.
+- Track task progress.
+- Mark tasks as completed.
+- Add completion remarks.
+
+Task statuses:
+- Not Started.
+- Assigned.
+- In Progress.
+- Blocked.
+- Completed.
+- Verified.
+
+Create a Kanban-style task view and a list view.
+
+Allow filtering by:
+- Work area.
+- Assigned person.
+- Priority.
+- Status.
+- Date.
+
+### Daily site diary
+
+Allow the Site Manager to create a daily site diary containing:
+
+- Date.
+- Weather, if manually recorded.
+- Total workforce.
+- Workers present.
+- Work completed.
+- Work in progress.
+- Materials received.
+- Equipment used.
+- Delays.
+- Site incidents.
+- Remarks.
+- Supporting photos.
+- Submitted by.
+
+The diary must have Draft, Submitted and Reviewed states.
+
+Once submitted, preserve the submitted record and use an amendment workflow for corrections.
+
+---
+
+# 9. SITE PROGRESS MODULE
+
+Create a professional construction progress tracking page.
+
+### Project progress
+
+Show:
+- Overall progress.
+- Planned progress.
+- Actual progress.
+- Schedule variance.
+- Milestones.
+- Delayed activities.
+
+### Work breakdown structure
+
+Create configurable work categories:
+
+- Excavation.
+- Foundation.
+- RCC.
+- Structural Work.
+- Masonry.
+- Plastering.
+- Electrical.
+- Plumbing.
+- Flooring.
+- Painting.
+- Finishing.
+
+Each activity must contain:
+
+- Activity name.
+- Work area.
+- Assigned engineer.
+- Responsible supervisor.
+- Planned start date.
+- Planned completion date.
+- Actual start date.
+- Actual completion date.
+- Quantity planned.
+- Quantity completed.
+- Unit.
+- Progress percentage.
+- Status.
+- Evidence images.
+- Remarks.
+
+Allow the Site Manager to update progress with quantity completed and supporting photos.
+
+Calculate progress from approved quantities where applicable. Do not allow arbitrary progress changes to silently overwrite previously approved records.
+
+### Progress visualization
+
+Include:
+- Progress by activity.
+- Planned vs actual graph.
+- Milestone timeline.
+- Delayed work list.
+- Work completion history.
+
+---
+
+# 10. WORKFORCE MODULE
+
+Create a complete site-specific workforce management page.
+
+The Site Manager must see employees assigned to their authorized sites.
+
+### Workforce categories
+
+- Site Engineers.
+- Supervisors.
+- Foremen.
+- Skilled Labour.
+- Unskilled Labour.
+- Electricians.
+- Plumbers.
+- Masons.
+- Carpenters.
+- Welders.
+- Painters.
+- Steel Fixers.
+- Machine Operators.
+- Drivers.
+- Contractors' Workers.
+
+### Workforce directory
+
+Display:
+- Employee ID.
+- Photo.
+- Name.
+- Designation.
+- Department.
+- Employment type.
+- Supervisor.
+- Current site.
+- Attendance status.
+- Assignment status.
+- Contact details, subject to permission.
+
+### Employee profile
+
+Create a detailed profile with tabs:
+
+1. Personal Information.
+2. Employment Details.
+3. Site Assignments.
+4. Attendance History.
+5. Documents.
+6. Work History.
+7. Activity History.
+
+The Site Manager may view permitted details and submit operational requests.
+
+Do not expose private salary, bank account, identity documents or confidential HR information unless the user has explicit permission.
+
+### Workforce assignment
+
+Allow authorized Site Managers to request:
+
+- New employee assignment.
+- Site transfer.
+- Temporary workforce allocation.
+- Contractor workforce addition.
+- Employee release from a site.
+
+Assignments must be approved according to company policy.
+
+Preserve historical assignments. Never simply overwrite a worker's previous site assignment.
+
+---
+
+# 11. ATTENDANCE & GPS TRACKING MODULE
+
+This is a critical part of BuildFlow.
+
+Create a professional attendance and workforce tracking interface.
+
+### Attendance overview
+
+Show:
+- Present.
+- Absent.
+- Late.
+- On Leave.
+- Missing Check-out.
+- Pending Approval.
+- Attendance Exceptions.
+
+### Attendance table
+
+Columns:
+
+- Employee.
+- Employee ID.
+- Designation.
+- Check-in time.
+- Check-out time.
+- Total working hours.
+- Attendance method.
+- GPS verification status.
+- Selfie verification status.
+- Supervisor.
+- Approval status.
+
+### Attendance details
+
+When a record is opened, show:
+
+- Employee information.
+- Check-in selfie.
+- Check-out selfie.
+- Check-in timestamp.
+- Check-out timestamp.
+- GPS coordinates where available and authorized.
+- Geofence verification.
+- Device/offline status where available.
+- Supervisor verification.
+- Attendance correction history.
+
+### Live tracking page
+
+Create a map-based site tracking interface.
+
+Show:
+- Authorized site boundary/geofence.
+- Active employees.
+- Last known employee positions.
+- Last update time.
+- Tracking status.
+- Location accuracy when available.
+- Stale GPS updates.
+
+Include filters:
+- Supervisor.
+- Department.
+- Designation.
+- Attendance status.
+
+IMPORTANT TRACKING RULES:
+
+- Location tracking should only occur during an authorized active work session.
+- Tracking should stop after check-out.
+- Use best-effort background tracking subject to Android and iOS restrictions.
+- Clearly show tracking status to the employee.
+- Do not imply continuous tracking if the device has stopped sending updates.
+- Show stale updates clearly.
+- Store offline updates with their original timestamps when synchronization becomes available.
+- Respect permissions, privacy notices and retention policies.
+- Never fabricate live GPS coordinates.
+
+### Attendance correction workflow
+
+Allow the Site Manager to review correction requests.
+
+Examples:
+- Missing check-in.
+- Missing check-out.
+- Incorrect attendance.
+- GPS issue.
+- Duplicate attendance.
+
+Actions:
+- Approve.
+- Reject.
+- Request More Information.
+
+Require a reason for decisions and maintain audit history.
+
+---
+
+# 12. SUPERVISORS & SITE ENGINEERS MODULE
+
+Create a dedicated management page for the Site Manager's operational team.
+
+Display:
+- Site Engineers.
+- Supervisors.
+- Foremen.
+- Assigned work areas.
+- Assigned workforce.
+- Active tasks.
+- Daily reports submitted.
+- Attendance approval status.
+
+### Team member profile
+
+Show:
+- Name.
+- Designation.
+- Contact information subject to permission.
+- Assigned area.
+- Assigned workforce.
+- Current tasks.
+- Performance and report history.
+
+### Delegation
+
+Allow the Site Manager to:
+
+- Assign a work area.
+- Allocate workers.
+- Assign daily activities.
+- Delegate attendance verification.
+- Request progress updates.
+- Review daily reports.
+
+The Site Manager should not be able to change company-wide job designations or unrestricted user permissions.
+
+---
+
+# 13. SHIFT MANAGEMENT MODULE
+
+Create a shift management page.
+
+Support:
+
+- General Shift.
+- Day Shift.
+- Night Shift.
+- Custom Shift.
+- Rotational Shift.
+
+Each shift should have:
+
+- Shift name.
+- Start time.
+- End time.
+- Break duration.
+- Assigned employees.
+- Assigned supervisor.
+- Applicable site.
+- Effective dates.
+
+Allow the Site Manager to view shift rosters and request changes.
+
+Avoid automatically assuming overtime merely because an employee checks out later than their scheduled shift.
+
+---
+
+# 14. LEAVE & OVERTIME REQUESTS
+
+Create a page for operational review of leave and overtime requests.
+
+### Leave requests
+
+Display:
+- Employee.
+- Leave type.
+- Start date.
+- End date.
+- Reason.
+- Current attendance impact.
+- Approval status.
+
+Actions:
+- Approve.
+- Reject.
+- Request clarification.
+
+### Overtime requests
+
+Display:
+- Employee.
+- Date.
+- Scheduled shift.
+- Requested overtime hours.
+- Reason.
+- Supervisor recommendation.
+- Supporting details.
+- Approval status.
+
+Overtime must follow company policy and applicable legal requirements.
+
+The Site Manager may only approve overtime within their delegated authority. Higher-level approval should be triggered when required.
+
+Maintain full approval history.
+
+---
+
+# 15. PROCUREMENT REQUESTS MODULE
+
+Create a site-specific material and purchase request management page.
+
+### Purchase request list
+
+Show:
+- Request ID.
+- Material.
+- Quantity.
+- Unit.
+- Estimated cost.
+- Supplier.
+- Requester.
+- Site.
+- Request date.
+- Priority.
+- Approval status.
+
+### Create purchase request
+
+Form fields:
+
+- Request title.
+- Material category.
+- Material name.
+- Description/specification.
+- Quantity.
+- Unit.
+- Estimated unit price.
+- Estimated total.
+- Preferred supplier.
+- Required delivery date.
+- Work area.
+- Reason for purchase.
+- Supporting documents.
+- Supporting photos.
+
+Allow multiple line items.
+
+### Purchase request workflow
+
+Suggested workflow:
+
+Employee/Supervisor → Site Engineer → Site Manager → Procurement → Finance, depending on company policy.
+
+The Site Manager must be able to:
+
+- Review requests.
+- Verify the requirement.
+- Check available stock.
+- Approve within delegated limits.
+- Reject with reason.
+- Send back for clarification.
+- Forward for further approval.
+
+Important:
+
+A Site Manager approval does not automatically mean that a purchase has been paid for or delivered.
+
+---
+
+# 16. MATERIAL RECEIPTS MODULE
+
+Create a dedicated material delivery verification page.
+
+When a supplier delivers materials to the site, the Site Manager or authorized Site Engineer should be able to verify the delivery.
+
+### Receipt information
+
+- Purchase order ID.
+- Supplier.
+- Delivery date and time.
+- Material name.
+- Ordered quantity.
+- Received quantity.
+- Unit.
+- Damaged quantity.
+- Accepted quantity.
+- Vehicle details.
+- Delivery challan.
+- Invoice/bill reference.
+- Delivery photos.
+- Material photos.
+- GPS location where available.
+- Remarks.
+
+### Verification process
+
+1. Open the purchase order.
+2. Compare ordered quantity with delivered quantity.
+3. Record received quantity.
+4. Record damaged or rejected material.
+5. Upload delivery evidence.
+6. Submit verification.
+7. Send for additional approval if required.
+8. Update stock only after authorized receipt confirmation.
+
+Never increase inventory merely because someone uploaded a supplier invoice.
+
+Show statuses:
+- Expected.
+- Partially Received.
+- Received Pending Verification.
+- Verified.
+- Rejected.
+- Disputed.
+
+---
+
+# 17. SITE INVENTORY MODULE
+
+Create a site-specific inventory management page.
+
+### Inventory overview
+
+Display:
+- Total material categories.
+- Total stock value, only if permitted.
+- Low-stock items.
+- Out-of-stock items.
+- Pending receipts.
+- Recent stock movements.
+
+### Inventory table
+
+Columns:
+- Material.
+- Category.
+- Available quantity.
+- Unit.
+- Minimum stock level.
+- Reserved quantity.
+- Last receipt.
+- Stock status.
+
+### Inventory transactions
+
+Support:
+- Material receipt.
+- Material issue.
+- Material consumption.
+- Material transfer.
+- Damaged material.
+- Stock adjustment.
+
+Every transaction must maintain:
+
+- Transaction ID.
+- Material.
+- Quantity.
+- Unit.
+- Source.
+- Destination.
+- Date and time.
+- Submitted by.
+- Approved by.
+- Supporting evidence.
+- Remarks.
+
+Do not allow silent inventory changes. Maintain a transaction history and adjustment approval process.
+
+---
+
+# 18. MATERIAL CONSUMPTION MODULE
+
+Create a separate material usage tracking page.
+
+Allow supervisors and engineers to submit consumption records.
+
+Fields:
+
+- Work activity.
+- Work area.
+- Material.
+- Quantity used.
+- Unit.
+- Date.
+- Submitted by.
+- Supporting photos.
+- Remarks.
+
+Show:
+
+- Planned material usage.
+- Actual material usage.
+- Remaining stock.
+- Consumption trends.
+- Unusual consumption alerts.
+
+Create material consumption reports by work activity and date.
+
+---
+
+# 19. EQUIPMENT & MACHINERY MODULE
+
+Create a professional equipment tracking page.
+
+### Equipment categories
+
+- Excavators.
+- Cranes.
+- Concrete mixers.
+- Generators.
+- Loaders.
+- Tractors.
+- Water tankers.
+- Vehicles.
+- Tools.
+- Safety equipment.
+
+### Equipment directory
+
+Display:
+- Asset ID.
+- Equipment name.
+- Category.
+- Assigned operator.
+- Site.
+- Current status.
+- Last maintenance date.
+- Next maintenance date.
+
+### Equipment statuses
+
+- Available.
+- In Use.
+- Under Maintenance.
+- Out of Service.
+- Transferred.
+
+### Equipment details
+
+Show:
+- Asset information.
+- Assignment history.
+- Operator.
+- Usage records.
+- Maintenance history.
+- Fuel records, if available.
+- Inspection records.
+- Documents.
+
+Allow the Site Manager to:
+
+- Request equipment.
+- Assign equipment within permitted authority.
+- Report breakdowns.
+- Submit maintenance requests.
+- Record usage hours.
+- Report damage.
+
+---
+
+# 20. CONTRACTORS MODULE
+
+Create a contractor management section.
+
+Display:
+- Contractor company.
+- Contractor contact person.
+- Assigned work category.
+- Site.
+- Contract period.
+- Workforce count.
+- Assigned supervisor.
+- Work status.
+- Compliance status.
+
+Contractor workers must be distinguishable from direct company employees.
+
+Allow the Site Manager to:
+
+- View assigned contractors.
+- Review contractor workforce attendance.
+- Submit contractor workforce additions.
+- Track contractor work progress.
+- Record contractor site issues.
+- Review submitted work completion reports.
+- Forward contractor bills for authorized review.
+
+Do not expose confidential contractor payment information without permission.
+
+---
+
+# 21. SITE EXPENSES MODULE
+
+Create a site expense tracking page.
+
+Categories:
+
+- Transport.
+- Fuel.
+- Equipment.
+- Minor repairs.
+- Safety supplies.
+- Site maintenance.
+- Utilities.
+- Labour-related operational expenses.
+- Other approved expenses.
+
+### Expense submission
+
+Fields:
+
+- Expense title.
+- Category.
+- Amount.
+- Date.
+- Supplier/vendor.
+- Project/site.
+- Description.
+- Payment method.
+- Bill or receipt upload.
+- Supporting photos.
+- Submitted by.
+
+### Expense workflow
+
+The Site Manager can:
+
+- Review site expense submissions.
+- Verify operational necessity.
+- Approve within delegated limits.
+- Reject with a reason.
+- Forward to Finance.
+
+Show:
+- Pending expenses.
+- Approved expenses.
+- Rejected expenses.
+- Paid expenses.
+- Monthly site expense summary.
+- Budget vs actual, where budget data is available.
+
+Do not treat approval as proof of payment.
+
+---
+
+# 22. SAFETY & INCIDENTS MODULE
+
+Safety management must be a first-class feature.
+
+Create a dedicated safety dashboard.
+
+### Safety overview
+
+Display:
+- Open safety incidents.
+- Critical incidents.
+- Pending inspections.
+- Safety observations.
+- Training/compliance alerts.
+
+### Incident reporting
+
+Fields:
+
+- Incident ID.
+- Date and time.
+- Site and work area.
+- Incident category.
+- Severity.
+- Description.
+- People involved.
+- Injuries, if any.
+- Immediate action taken.
+- Photos/evidence.
+- Reported by.
+- Assigned safety officer.
+- Follow-up status.
+
+Categories:
+- Injury.
+- Near Miss.
+- Unsafe Condition.
+- Equipment Incident.
+- Fire Hazard.
+- Electrical Hazard.
+- Structural Concern.
+- PPE Violation.
+
+Severity:
+- Low.
+- Medium.
+- High.
+- Critical.
+
+### Safety inspections
+
+Allow the Site Manager to:
+
+- Schedule inspections.
+- Assign inspectors.
+- Complete checklists.
+- Upload photos.
+- Record observations.
+- Assign corrective actions.
+- Track resolution.
+
+Critical incidents must be escalated immediately according to the company's configured emergency procedure.
+
+Do not hide or delete incident history after resolution.
+
+---
+
+# 23. SITE REPORTS MODULE
+
+Create a complete site reporting centre.
+
+Available reports:
+
+1. Daily Site Report.
+2. Workforce Attendance Report.
+3. Workforce Allocation Report.
+4. Site Progress Report.
+5. Material Receipt Report.
+6. Inventory Report.
+7. Material Consumption Report.
+8. Equipment Utilization Report.
+9. Safety Incident Report.
+10. Site Expense Report.
+11. Contractor Work Report.
+12. Delayed Activity Report.
+
+Each report must support:
+
+- Date range.
+- Site.
+- Work area.
+- Employee/supervisor.
+- Category filters.
+- Search.
+- Export to CSV.
+- PDF download where implemented.
+
+Create attractive report layouts with company branding and site details.
+
+Do not display payroll or company-wide financial information in reports unless explicitly authorized.
+
+---
+
+# 24. APPROVAL CENTRE
+
+Create a centralized approval management page.
+
+The Site Manager should see only the requests assigned to them or within their authorized approval scope.
+
+Approval categories:
+
+- Attendance Corrections.
+- Leave Requests.
+- Overtime Requests.
+- Workforce Assignment Requests.
+- Purchase Requests.
+- Material Receipts.
+- Site Expenses.
+- Equipment Maintenance.
+- Daily Reports.
+- Safety Corrective Actions.
+
+Each request should have:
+
+- Request ID.
+- Request type.
+- Requester.
+- Submitted date.
+- Priority.
+- Details.
+- Supporting documents.
+- Previous approval steps.
+- Current approval step.
+- Available actions.
+
+Actions:
+
+- Approve.
+- Reject.
+- Request Changes.
+- Forward for Higher Approval.
+
+Require remarks for rejection and maintain a permanent approval audit trail.
+
+Support maker-checker separation where required by company policy.
+
+---
+
+# 25. DOCUMENTS MODULE
+
+Create a site document management page.
+
+Document categories:
+
+- Site Drawings.
+- Work Orders.
+- Project Documents.
+- Safety Documents.
+- Inspection Reports.
+- Material Invoices.
+- Delivery Challans.
+- Equipment Documents.
+- Contractor Documents.
+- Site Photographs.
+- Daily Reports.
+
+Features:
+
+- Upload.
+- Preview.
+- Download.
+- Search.
+- Filter.
+- Categorize.
+- View upload history.
+- Track document versions.
+- Control access.
+
+Store actual files in private Cloudflare R2 storage and retain metadata and object references in the database.
+
+Use secure signed URLs for authorized access.
+
+---
+
+# 26. NOTIFICATIONS MODULE
+
+Create a dedicated notifications page and notification dropdown.
+
+Examples:
+
+- New attendance correction submitted.
+- Material delivery expected.
+- Purchase request requires review.
+- Equipment breakdown reported.
+- Safety incident reported.
+- Daily report pending.
+- Task deadline approaching.
+- Employee missing checkout.
+
+Support:
+
+- Read/unread status.
+- Notification category.
+- Timestamp.
+- Related record.
+- Click to open the relevant page.
+- Mark as read.
+- Mark all as read.
+
+Use mock notifications initially, but structure the service for Supabase Realtime integration.
+
+---
+
+# 27. SITE SETTINGS MODULE
+
+Allow the Site Manager to view and manage permitted site-level settings.
+
+Display:
+
+- Site name.
+- Site code.
+- Address.
+- Location.
+- Geofence details.
+- Working days.
+- Shift timings.
+- Assigned managers.
+- Supervisors.
+- Engineers.
+- Operational contact details.
+
+Allow editable fields only when authorized.
+
+Company-wide settings and sensitive organization configuration must remain under Company Admin.
+
+---
+
+# 28. MY PROFILE
+
+Create a professional profile page for the Site Manager.
+
+Sections:
+
+- Profile photo.
+- Full name.
+- Employee ID.
+- Designation.
+- Department.
+- Contact information.
+- Assigned sites.
+- Reporting manager.
+- Account security.
+- Notification preferences.
+
+Allow the Site Manager to update permitted personal information and change their password through the authentication flow.
+
+---
+
+# 29. ROLE-BASED ACCESS CONTROL
+
+Implement role-based access throughout the dashboard.
+
+The Site Manager has site-scoped permissions.
+
+Possible permission examples:
+
+- View assigned site.
+- View assigned workforce.
+- View attendance.
+- Verify attendance.
+- Approve attendance corrections.
+- Assign tasks.
+- View site progress.
+- Update site progress.
+- Create purchase requests.
+- Approve purchases within limits.
+- Verify material receipts.
+- View site inventory.
+- Record material consumption.
+- View equipment.
+- Submit maintenance requests.
+- Review site expenses.
+- Approve expenses within limits.
+- View safety incidents.
+- Manage inspections.
+- Submit site reports.
+- View site documents.
+
+The exact permissions must be configurable by Company Admin.
+
+Do not implement security only by hiding frontend buttons. Backend APIs and Supabase RLS must enforce site-level access.
+
+A Site Manager must not be able to:
+
+- View unrelated company sites.
+- Access all company employees.
+- Change company subscription.
+- Change company-wide roles.
+- Access unrestricted payroll data.
+- Change another site's inventory.
+- Approve financial requests beyond delegated limits.
+- Access confidential HR documents without permission.
+
+---
+
+# 30. DATA MODELS AND MOCK SERVICE STRUCTURE
+
+Create TypeScript models and modular service interfaces for:
+
+- Site.
+- Project.
+- SiteAssignment.
+- Employee.
+- Supervisor.
+- Engineer.
+- AttendanceSession.
+- AttendanceException.
+- TrackingSession.
+- LocationLog.
+- SiteTask.
+- DailySiteReport.
+- WorkActivity.
+- ProgressUpdate.
+- PurchaseRequest.
+- PurchaseItem.
+- MaterialReceipt.
+- InventoryItem.
+- InventoryTransaction.
+- MaterialConsumption.
+- EquipmentAsset.
+- EquipmentMaintenance.
+- Contractor.
+- ContractorWorker.
+- SiteExpense.
+- SafetyIncident.
+- SafetyInspection.
+- ApprovalWorkflow.
+- ApprovalRecord.
+- SiteDocument.
+- Notification.
+
+Suggested database entities:
+
+- sites
+- site_user_assignments
+- site_employee_assignments
+- attendance_sessions
+- attendance_photos
+- tracking_sessions
+- employee_location_logs
+- site_tasks
+- daily_site_reports
+- work_activities
+- progress_updates
+- purchase_requests
+- purchase_items
+- material_receipts
+- inventory_items
+- inventory_transactions
+- material_consumption
+- equipment_assets
+- equipment_maintenance
+- contractors
+- contractor_workers
+- site_expenses
+- safety_incidents
+- safety_inspections
+- approval_workflows
+- approval_records
+- site_documents
+- notifications
+
+Use organization ID and site ID scoping in the data model.
+
+Keep the frontend service interfaces separate from mock implementations so they can later be connected to Supabase without rewriting every page.
+
+---
+
+# 31. FUNCTIONAL INTERACTION REQUIREMENTS
+
+This must be a functional prototype, not a collection of static screens.
+
+Implement:
+
+- Working sidebar navigation.
+- Site switching.
+- Search.
+- Filters.
+- Sorting.
+- Pagination.
+- Tabs.
+- Modal forms.
+- Drawers.
+- Create, edit and view operations.
+- Form validation.
+- Approval actions.
+- Status updates.
+- File upload previews.
+- Image previews.
+- Report filtering.
+- Chart interactions.
+- Notifications.
+- Responsive mobile navigation.
+- Empty states.
+- Loading states.
+- Error states.
+- Success feedback.
+
+All primary buttons must perform their advertised action.
+
+Use realistic mock data and persist prototype changes locally when appropriate.
+
+Do not show a success message for an action that has not actually been completed.
+
+Clearly distinguish mock/simulated data from real integrated data.
+
+---
+
+# 32. IMPORTANT BUSINESS LOGIC
+
+Follow these rules throughout the application:
+
+1. Employees may work at different sites over time. Maintain assignment history.
+2. Attendance must be linked to the relevant employee and site assignment.
+3. GPS tracking must stop after check-out.
+4. Missing GPS data must not be represented as a verified location.
+5. Offline attendance and tracking records must preserve their original timestamps.
+6. Attendance corrections must have approval history.
+7. Purchase approval does not mean payment completion.
+8. Invoice upload does not mean material delivery verification.
+9. Inventory changes must be represented by authorized transactions.
+10. Material consumption must reference a valid site inventory record.
+11. Equipment transfers must preserve assignment history.
+12. Contractor workers must remain distinguishable from direct employees.
+13. Site expenses must follow configured approval limits.
+14. Critical safety incidents must be escalated.
+15. Daily reports must retain submitted history.
+16. Every important approval and modification must be auditable.
+17. Company Admin controls the organization's permissions and approval policies.
+18. Site Manager access is limited to assigned sites and authorized actions.
+
+---
+
+# 33. VISUAL QUALITY AND REFERENCE DIRECTION
+
+Use a polished visual direction with a strong construction operations identity.
+
+The interface should include:
+
+- A premium dark navy sidebar.
+- A clean white content area.
+- Compact but informative KPI cards.
+- Attractive attendance charts.
+- Site progress visualization.
+- Clear status badges.
+- Modern tables.
+- High-quality map layout.
+- Professional task boards.
+- Clean activity timelines.
+- Elegant forms and drawers.
+- Well-designed mobile navigation.
+
+Use construction-related visuals only where they add value, such as site progress photos, material images and equipment thumbnails.
+
+Do not use random stock photos to fill every card.
+
+Avoid:
+- Generic template dashboards.
+- Excessive gradients.
+- Oversized empty cards.
+- Unnecessary animations.
+- Too many colors.
+- Fake live map data.
+- Fake integrations.
+- Buttons that do nothing.
+- Desktop-only layouts.
+
+---
+
+# 34. DEVELOPMENT AND DELIVERY APPROACH
+
+Build the application in a modular structure.
+
+Suggested folder organization:
+
+src/
+- components/
+  - layout/
+  - dashboard/
+  - workforce/
+  - attendance/
+  - progress/
+  - procurement/
+  - inventory/
+  - equipment/
+  - safety/
+  - reports/
+  - common/
+- pages/
+  - Overview/
+  - DailyOperations/
+  - SiteProgress/
+  - Workforce/
+  - Attendance/
+  - Team/
+  - Shifts/
+  - Requests/
+  - Procurement/
+  - Receipts/
+  - Inventory/
+  - Consumption/
+  - Equipment/
+  - Contractors/
+  - Expenses/
+  - Safety/
+  - Reports/
+  - Approvals/
+  - Documents/
+  - Notifications/
+  - Settings/
+  - Profile/
+- hooks/
+- services/
+- store/
+- types/
+- utils/
+- mock-data/
+- routes/
+
+Use reusable components rather than duplicating layouts.
+
+Keep forms, tables, filters, cards, status badges and page headers consistent across modules.
+
+---
+
+# 35. FINAL ACCEPTANCE CRITERIA
+
+The finished result must satisfy all of the following:
+
+- A complete Site Manager dashboard built from scratch.
+- Separate design and navigation from Company Admin.
+- Site-specific data and site switching.
+- Professional construction-focused interface.
+- Fully responsive desktop, tablet and mobile layouts.
+- Operational overview with useful KPIs.
+- Workforce and attendance management.
+- GPS tracking interface with honest simulated-data indicators.
+- Daily site reporting.
+- Construction progress management.
+- Procurement and material receipt workflows.
+- Inventory and consumption management.
+- Equipment and contractor management.
+- Site expense workflows.
+- Safety and incident management.
+- Centralized approvals.
+- Reports and documents.
+- Role-based permissions.
+- Working interactions and forms.
+- Modular, maintainable React and TypeScript code.
+- Clear separation between mock data and future backend integration.
+
+**Most important:** Do not build only the overview page and stop. Implement the complete Site Manager navigation and all requested pages with consistent design and working prototype interactions.
+
+Start by creating the application shell, navigation, site selector and overview dashboard. Then implement the remaining modules using the same design system and shared components.
+
+The final result should feel like a real enterprise construction site operations platform that a Site Manager can use every day on both desktop and mobile.

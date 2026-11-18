@@ -1,0 +1,6 @@
+{
+  "name": "BuildFlow — Site Manager",
+  "description": "Construction site operations, workforce attendance, procurement, inventory, equipment, and safety management platform.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
